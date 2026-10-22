@@ -62,16 +62,8 @@ namespace SimpleRefactor
 
         public void TouchedBySnake(Snake snake)
         {
-
             if (isOccupied)
-            {
-                Debug.Log($"Occupied cell touched, occupee: {occupyingEntity.graphic.name}");
                 occupyingEntity.TouchedBySnake(snake);
-            }
-            else
-            {
-                Debug.Log($"Empty cell touched");
-            }
         }
 
         public void Dispose()

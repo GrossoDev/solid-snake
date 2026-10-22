@@ -24,7 +24,7 @@ namespace SimpleRefactor
             CreateCellGrid();
             SpawnEdgeWalls();
             SpawnInnerWalls();
-            SpawnFruit();
+            SpawnRandomFruit();
             StretchGroundplaneToFitArena();
         }
 
@@ -46,14 +46,9 @@ namespace SimpleRefactor
                     throw new Exception($"Couldn't find a random free cell after {iterations} iterations.");
                 }
             }
-            while (AreThereAnyWallsAround(cell));
+            while (AreTheSurroundingsOfCellFree(cell) == false);
 
             return cell;
-        }
-
-        public int GetAmountOfWallsToCreate()
-        {
-            return Random.Range(minAmountOfWalls, maxAmountOfWalls + 1);
         }
 
         public Cell GetAdjacentCell(Cell cell, Direction direction)
@@ -69,8 +64,25 @@ namespace SimpleRefactor
 
             return neighbour;
         }
+        
+        public void SpawnRandomWall()
+        {
+            Cell randomCell = GetRandomFreeCell();
+            wallSpawner.Spawn(randomCell);
+        }
 
-        public bool AreThereAnyWallsAround(Cell centerCell)
+        public void SpawnRandomFruit()
+        {
+            Cell randomCell = GetRandomFreeCell();
+            fruitSpawner.Spawn(randomCell);
+        }
+
+        private int GetAmountOfWallsToCreate()
+        {
+            return Random.Range(minAmountOfWalls, maxAmountOfWalls + 1);
+        }
+
+        private bool AreTheSurroundingsOfCellFree(Cell centerCell)
         {
             Vector2Int centerCellPosition = centerCell.GetPosition();
             int centerCellRow = centerCellPosition.y;
@@ -86,29 +98,13 @@ namespace SimpleRefactor
                 for (int column = columnLowerBound; column <= columnUpperBound; column++)
                 {
                     Cell cell = cells[row, column];
-                    bool cellHasWall = DoesCellHaveAWall(cell);
                     
-                    if (cellHasWall)
-                        return true;
+                    if (cell.IsOccupied())
+                        return false;
                 }
             }
 
-            return false;
-        }
-
-        private bool DoesCellHaveAWall(Cell cell)
-        {
-            if (cell.IsOccupied())
-            {
-                Entity occupee = cell.GetOccupyingEntity();
-                bool isWall = occupee is WallEntity;
-
-                return isWall;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         private void CreateCellGrid()
@@ -155,20 +151,17 @@ namespace SimpleRefactor
 
             for (int spawned = 0; spawned <= amountToSpawn; spawned++)
             {
-                Cell randomCell = GetRandomFreeCell();
-                wallSpawner.Spawn(randomCell);
+                SpawnRandomWall();
             }
-        }
-
-        public void SpawnFruit()
-        {
-            Cell randomCell = GetRandomFreeCell();
-            fruitSpawner.Spawn(randomCell);
         }
 
         private void StretchGroundplaneToFitArena()
         {
+            Vector3 position = new Vector3(width / 2, 0, -height / 2);
+            Vector3 scale = new Vector3(width, 1, height);
 
+            groundplaneGraphic.transform.position = position;
+            groundplaneGraphic.transform.localScale = scale;
         }
 
         public void Dispose()

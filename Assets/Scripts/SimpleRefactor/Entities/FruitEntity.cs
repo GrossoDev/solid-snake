@@ -17,7 +17,9 @@ namespace SimpleRefactor
         {
             DestroyEntity();
             snake.Grow();
-            arena.SpawnFruit();
+            arena.SpawnRandomFruit();
+            arena.SpawnRandomFruit();
+            arena.SpawnRandomWall();
         }
     }
 }

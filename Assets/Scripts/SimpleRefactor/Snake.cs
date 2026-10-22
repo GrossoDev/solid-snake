@@ -49,8 +49,6 @@ namespace SimpleRefactor
             SnakePartEntity head = GetHead();
             Direction headDirection = head.GetDirection();
             bool willTheSnakeTurnIntoItself = newDirection.IsOppositeTo(headDirection);
-
-            Debug.Log($"Head/New/IsOpp: ({headDirection.deltaX},{headDirection.deltaY})/({newDirection.deltaX},{newDirection.deltaY})/({willTheSnakeTurnIntoItself})");
             
             if (!willTheSnakeTurnIntoItself)
                 direction = newDirection;
