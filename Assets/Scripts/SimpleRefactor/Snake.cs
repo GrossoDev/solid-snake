@@ -16,8 +16,8 @@ namespace SimpleRefactor
         public SnakePartEntitySpawner snakePartSpawner;
 
         private void LateUpdate()
-        {
-            MoveCameraToHead();
+            {
+                MoveCameraToHead();
         }
 
         public void Initialize(Cell startingCell)
@@ -74,8 +74,8 @@ namespace SimpleRefactor
         }
 
         public void Die()
-        {
-            gameManager.SnakeDied(this);
+            {
+                gameManager.SnakeDied(this);
         }
         
         public int GetLength()
@@ -116,7 +116,7 @@ namespace SimpleRefactor
             foreach (var snakePart in snakePartEntities)
             {
                 Cell currentCell = snakePart.occupiedCell;
-                Direction currentDirection = direction;
+                Direction currentDirection = snakePart.GetDirection();
 
                 snakePart.MoveToCell(nextCell);
                 snakePart.SetDirection(nextDirection);

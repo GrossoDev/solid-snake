@@ -39,6 +39,11 @@ namespace SimpleRefactor
 
         public void DestroyEntity()
         {
+            if (occupiedCell != null)
+            {
+                occupiedCell.RemoveOccupyingEntity();
+                occupiedCell = null;
+            }
             DisposeGraphic();
         }
 

@@ -12,8 +12,8 @@ namespace SimpleRefactor
         public const int MaxIterationsToFindFreeCell = 100;
         public int width = 40;
         public int height = 40;
-        public int minAmountOfWalls = 50;
-        public int maxAmountOfWalls = 6;
+        public int minAmountOfWalls = 6;
+        public int maxAmountOfWalls = 50;
         public GameObject groundplaneGraphic;
         public WallEntitySpawner wallSpawner;
         public FruitEntitySpawner fruitSpawner;
@@ -35,8 +35,8 @@ namespace SimpleRefactor
 
             do
             {
-                int row = Random.Range(0, width);
-                int column = Random.Range(0, height);
+                int row = Random.Range(0, height);
+                int column = Random.Range(0, width);
 
                 cell = cells[row, column];
                 iterations++;
@@ -149,7 +149,7 @@ namespace SimpleRefactor
         {
             int amountToSpawn = GetAmountOfWallsToCreate();
 
-            for (int spawned = 0; spawned <= amountToSpawn; spawned++)
+            for (int spawned = 0; spawned < amountToSpawn; spawned++)
             {
                 SpawnRandomWall();
             }

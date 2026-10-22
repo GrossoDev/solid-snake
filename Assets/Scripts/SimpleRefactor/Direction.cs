@@ -13,10 +13,10 @@ namespace SimpleRefactor
 
         public bool IsEqualTo(Direction otherDirection)
         {
-            bool oppositeX = this.deltaX == otherDirection.deltaX;
-            bool oppositeY = this.deltaY == otherDirection.deltaY;
+            bool sameX = this.deltaX == otherDirection.deltaX;
+            bool sameY = this.deltaY == otherDirection.deltaY;
 
-            return oppositeX && oppositeY;
+            return sameX && sameY;
         }
 
         public bool IsOppositeTo(Direction otherDirection)
